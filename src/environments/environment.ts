@@ -1,12 +1,17 @@
+// import * as dotenv from 'dotenv';
+// dotenv.config();
+import process from 'process';
+
 export const environment = {
-  production: false,
-  firebase: {
-    apiKey: 'AIzaSyCKkZV93NyZvuezikhJhtMJFsZTC63gvIY',
-    projectId: 'dresswell-2ad8f',
-    appId: '1:404538998509:web:ec5ef11bc04214b2bf96e4',
-    storageBucket: 'dresswell-2ad8f.appspot.com',
-    authDomain: 'dresswell-2ad8f.firebaseapp.com',
-    messagingSenderId: '404538998509',
-    measurementId: 'G-112KGBMR2F',
-  },
-};
+    production: false,
+    firebase: {
+      apiKey: process.env['NEXT_PUBLIC_FIREBASE_API_KEY'],
+      projectId: process.env['NEXT_PUBLIC_FIREBASE_PROJECT_ID'],
+      appId: process.env['NEXT_PUBLIC_FIREBASE_APP_ID'],
+      storageBucket: process.env['NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET'],
+      authDomain: process.env['NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN'],
+      messagingSenderId: process.env['NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID'],
+      measurementId: process.env['NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID']
+    }
+  };
+  
