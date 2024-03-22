@@ -24,7 +24,16 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
     BrowserAnimationsModule,
     AppRoutingModule,
     MaterialComponentsModule,
-    provideFirebaseApp(() => initializeApp({"projectId":"dresswell-2ad8f","appId":"1:404538998509:web:ec5ef11bc04214b2bf96e4","storageBucket":"dresswell-2ad8f.appspot.com","apiKey":"AIzaSyCKkZV93NyZvuezikhJhtMJFsZTC63gvIY","authDomain":"dresswell-2ad8f.firebaseapp.com","messagingSenderId":"404538998509","measurementId":"G-112KGBMR2F"})),
+    provideFirebaseApp(() =>
+      initializeApp({
+        projectId: 'dresswell-2ad8f',
+        appId: '1:404538998509:web:ec5ef11bc04214b2bf96e4',
+        storageBucket: 'dresswell-2ad8f.appspot.com',
+        authDomain: 'dresswell-2ad8f.firebaseapp.com',
+        messagingSenderId: '404538998509',
+        measurementId: 'G-112KGBMR2F',
+      })
+    ),
     provideFirestore(() => getFirestore()),
   ],
   providers: [provideAnimationsAsync()],
