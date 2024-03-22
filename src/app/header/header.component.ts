@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FormControl } from '@angular/forms';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -35,7 +36,9 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('Firebase API Key:', environment.firebase.apiKey);
+  }
 
   selectProduct(event) {}
 
