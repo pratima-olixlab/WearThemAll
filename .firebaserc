@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "dresswell-2ad8f": {
+      "hosting": {
+        "my-first-app": [
+          "dresswell-2ad8f"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "dresswell-2ad8f"
+  }
+}

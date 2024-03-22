@@ -9,6 +9,8 @@ import { MaterialComponentsModule } from './material-component.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
 import { HomeStartComponent } from './home-start/home-start.component';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { HomeStartComponent } from './home-start/home-start.component';
     BrowserAnimationsModule,
     AppRoutingModule,
     MaterialComponentsModule,
+    provideFirebaseApp(() => initializeApp({"projectId":"dresswell-2ad8f","appId":"1:404538998509:web:ec5ef11bc04214b2bf96e4","storageBucket":"dresswell-2ad8f.appspot.com","apiKey":"AIzaSyCKkZV93NyZvuezikhJhtMJFsZTC63gvIY","authDomain":"dresswell-2ad8f.firebaseapp.com","messagingSenderId":"404538998509","measurementId":"G-112KGBMR2F"})),
+    provideFirestore(() => getFirestore()),
   ],
   providers: [provideAnimationsAsync()],
   bootstrap: [AppComponent],
