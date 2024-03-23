@@ -23,7 +23,7 @@ import { AuthComponent } from './auth/auth.component';
 const routes: Routes = [
   {
     path: '',
-    component: HomeStartComponent,
+    component: HomeComponent,
   },
   {
     path: 'auth',
