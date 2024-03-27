@@ -12,5 +12,6 @@ export class AppComponent {
 
   ngOnInit() {
     this.notificationService.init();
+    console.log('process',process.env["FIREBASE_API_KEY"]);
   }
 }

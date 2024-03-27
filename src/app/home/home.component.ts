@@ -12,4 +12,7 @@ export class HomeComponent {
   getStarted() {
     this.router.navigate(['/home']);
   }
+  ngOnInit(){
+    console.log('process',process.env["FIREBASE_API_KEY"]);
+  }
 }
