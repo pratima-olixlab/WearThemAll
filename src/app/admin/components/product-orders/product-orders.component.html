@@ -4,5 +4,6 @@
 <button mat-raised-button color="primary" (click)="orderHistory()">Orders Declined</button>
 <button mat-raised-button color="primary" (click)="ordersAccepted()">Orders Accepted</button>
 <div *ngFor="let order of orders$ | async">
-  <app-mini-orders [task]="order" (edit)="handleEdit($event)"  (accept)="handleAccept($event)" (decline)="handleDecline($event)"></app-mini-orders>
+  <app-mini-orders [task]="order" (edit)="handleEdit($event)"   (accept)="handleOrderStatus($event, 'Accepted')" 
+  (decline)="handleOrderStatus($event, 'Declined')"></app-mini-orders>
 </div>

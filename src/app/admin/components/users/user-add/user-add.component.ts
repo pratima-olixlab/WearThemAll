@@ -5,7 +5,7 @@ import { UserDocument } from '../../../../product';
 @Component({
   selector: 'app-user-add',
   templateUrl: './user-add.component.html',
-  styleUrls: ['./user-add.component.css']
+  styleUrls: ['./user-add.component.css'],
 })
 export class UserAddComponent {
   private backupProduct: Partial<UserDocument> = { ...this.data.task };
@@ -22,7 +22,7 @@ export class UserAddComponent {
     this.data.task.id = this.backupProduct.id;
     this.dialogRef.close(this.data);
   }
-} 
+}
 export interface UserData {
   task: Partial<UserDocument>;
   enableDelete: boolean;

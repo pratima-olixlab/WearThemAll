@@ -11,18 +11,11 @@ export class WishlistService {
 
   addToWishlist(userId: string, product: Product): Promise<void> {
     const wishlistItem = { userId, product, productId: product.id };
-    return this.firestore
-      .collection(`wishlist/${userId}/items`)
-      .add(wishlistItem)
-      .then(() => {});
+    return this.firestore.collection(`wishlist/${userId}/items`).add(wishlistItem).then(() => {});
   }
 
   removeFromWishlist(userId: string, productId: string): Promise<void> {
-    const wishlistRef = this.firestore.collection(
-      `wishlist/${userId}/items`,
-      (ref) => ref.where('productId', '==', productId)
-    );
-
+    const wishlistRef = this.firestore.collection(`wishlist/${userId}/items`,(ref) => ref.where('productId', '==', productId));
     return wishlistRef
       .get()
       .pipe(first())
@@ -43,10 +36,7 @@ export class WishlistService {
   }
 
   isProductInWishlist(userId: string, productId: string): Promise<boolean> {
-    const wishlistRef = this.firestore.collection(
-      `wishlist/${userId}/items`,
-      (ref) => ref.where('productId', '==', productId)
-    );
+    const wishlistRef = this.firestore.collection(`wishlist/${userId}/items`, (ref) => ref.where('productId', '==', productId));
     return wishlistRef
       .get()
       .toPromise()
@@ -54,26 +44,25 @@ export class WishlistService {
         return !querySnapshot.empty;
       });
   }
- 
-  submitRating(userId: string, productId: string, rating: number): Promise<void> {
+
+  submitRating(
+    userId: string,
+    productId: string,
+    rating: number
+  ): Promise<void> {
     const ratingItem = { userId, rating };
-    return this.firestore
-      .collection(`ratings`)
-      .doc(productId)
-      .set({ [userId]: rating }, { merge: true });
+    return this.firestore.collection(`ratings`).doc(productId).set({ [userId]: rating }, { merge: true });
   }
 
   getRatingsForProduct(productId: string): Observable<any[]> {
-    return this.firestore
-      .collection(`ratings`)
-      .doc(productId)
+    return this.firestore.collection(`ratings`).doc(productId)
       .get()
       .pipe(
-        map(snapshot => {
+        map((snapshot) => {
           const ratings = [];
           const data = snapshot.data();
           if (data) {
-            Object.keys(data).forEach(userId => {
+            Object.keys(data).forEach((userId) => {
               ratings.push({ userId, rating: data[userId] });
             });
           }

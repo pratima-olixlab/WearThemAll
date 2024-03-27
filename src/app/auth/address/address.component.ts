@@ -5,7 +5,7 @@ import { Address } from '../../product';
 @Component({
   selector: 'app-address',
   templateUrl: './address.component.html',
-  styleUrls: ['./address.component.css']
+  styleUrls: ['./address.component.css'],
 })
 export class AddressComponent {
   private backupProduct: Partial<Address> = { ...this.data.task };
@@ -13,7 +13,7 @@ export class AddressComponent {
     public dialogRef: MatDialogRef<AddressComponent>,
     @Inject(MAT_DIALOG_DATA) public data: AddressData
   ) {}
-  
+
   cancel(): void {
     this.data.task.country = this.backupProduct.country;
     this.data.task.pincode = this.backupProduct.pincode;
@@ -35,4 +35,3 @@ export interface AddressResult {
   task: Address;
   delete?: boolean;
 }
-

@@ -1,23 +1,16 @@
 import { Component, Inject } from '@angular/core';
 import { CategoryResult } from '../admin-category/category-details/category-details.component';
 import { transferArrayItem } from '@angular/cdk/drag-drop';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection,
-} from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { SubcategoryDetailsComponent } from './subcategory-details/subcategory-details.component';
 import { CategoryDetails } from '../../../product';
 
-
 const getObservable = (
-  collection: AngularFirestoreCollection<CategoryDetails>
-) => {
+  collection: AngularFirestoreCollection<CategoryDetails>) => {
   const subject = new BehaviorSubject<CategoryDetails[]>([]);
-  collection
-    .valueChanges({ idField: 'id' })
-    .subscribe((val: CategoryDetails[]) => {
+  collection.valueChanges({ idField: 'id' }).subscribe((val: CategoryDetails[]) => {
       subject.next(val);
     });
   return subject;
@@ -27,7 +20,10 @@ const getObservable = (
   selector: 'app-admin-subcategory',
   templateUrl: './admin-subcategory.component.html',
   styleUrls: ['./admin-subcategory.component.css'],
-  providers: [{ provide: MatDialogRef, useValue: {}}, { provide: MAT_DIALOG_DATA, useValue: {} }, ]
+  providers: [
+    { provide: MatDialogRef, useValue: {} },
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+  ],
 })
 export class AdminSubCategoryComponent {
   constructor(
@@ -35,16 +31,12 @@ export class AdminSubCategoryComponent {
     private store: AngularFirestore,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
-  subcategory = getObservable(this.store.collection('subcategory')) as Observable<
-    CategoryDetails[]
-  >;
+  subcategory = getObservable(
+    this.store.collection('subcategory')
+  ) as Observable<CategoryDetails[]>;
 
-  category = getObservable(this.store.collection('category')) as Observable<
-  CategoryDetails[]
->;
-
+  category = getObservable(this.store.collection('category')) as Observable<CategoryDetails[]>;
   categories: CategoryDetails[] = [];
-
   selectedCategory: string = '';
   selectedCategoryId: string = '';
 
@@ -72,7 +64,7 @@ export class AdminSubCategoryComponent {
       data: {
         task,
         enableDelete: true,
-        categories: this.categories, 
+        categories: this.categories,
       },
     });
     dialogRef.afterClosed().subscribe((result: CategoryResult) => {
@@ -91,7 +83,6 @@ export class AdminSubCategoryComponent {
     if (event.previousContainer === event.container) {
       return;
     }
-
     const item = event.previousContainer.data[event.previousIndex];
     this.store.firestore.runTransaction(() => {
       const promise = Promise.all([

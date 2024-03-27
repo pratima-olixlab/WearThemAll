@@ -4,27 +4,25 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable, catchError, combineLatest, map, of, switchMap } from 'rxjs';
 import { UserDocument } from '../product';
+import { AuthService } from './authenticate.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseService {
-  getConfig() {
-  }
+  getConfig() {}
   addresses: Address[] = [];
   currentUser: Observable<UserDocument>;
   isLoggedIn = false;
   constructor(
     private firebaseAuth: AngularFireAuth,
     public firestore: AngularFirestore,
+    private authService: AuthService
   ) {
     this.currentUser = this.firebaseAuth.authState.pipe(
       switchMap((user) => {
         if (user) {
-          return this.firestore
-            .collection('users')
-            .doc<UserDocument>(user.uid)
-            .valueChanges();
+          return this.firestore.collection('users').doc<UserDocument>(user.uid).valueChanges();
         } else {
           return of(null);
         }
@@ -34,16 +32,13 @@ export class FirebaseService {
         return of(null);
       })
     );
-
     this.currentUser.subscribe((user) => {
       this.isLoggedIn = !!user;
     });
   }
 
   async signin(email: string, password: string) {
-    await this.firebaseAuth
-      .signInWithEmailAndPassword(email, password)
-      .then((res) => {
+    await this.firebaseAuth.signInWithEmailAndPassword(email, password).then((res) => {
         this.isLoggedIn = true;
         localStorage.setItem('user', JSON.stringify(res.user));
       });
@@ -51,7 +46,7 @@ export class FirebaseService {
 
   async signup(email: string, password: string): Promise<any> {
     try {
-      const res = await this.firebaseAuth.createUserWithEmailAndPassword(
+        const res = await this.firebaseAuth.createUserWithEmailAndPassword(
         email,
         password
       );
@@ -68,14 +63,10 @@ export class FirebaseService {
     return this.firestore.collection<Product>('product').valueChanges();
   }
 
-
   forgotPassword(email: string) {
-    return this.firebaseAuth
-      .sendPasswordResetEmail(email)
-      .then(() => {
-        window.alert('Password reset email sent, check your inbox.');  
-      })
-      .catch((error) => {
+    return this.firebaseAuth.sendPasswordResetEmail(email).then(() => {
+        window.alert('Password reset email sent, check your inbox.');
+      }).catch((error) => {
         window.alert(error);
       });
   }
@@ -107,13 +98,11 @@ export class FirebaseService {
   logout() {
     this.firebaseAuth.signOut();
     localStorage.removeItem('user');
+    this.authService.isSignedIn = false;
   }
 
   getAllUsernames(): Observable<UserDocument[]> {
-    return this.firestore
-      .collection('users')
-      .valueChanges()
-      .pipe(
+    return this.firestore.collection('users').valueChanges().pipe(
         map((userDocuments: UserDocument[]) => userDocuments),
         catchError((error) => {
           console.error('Error fetching users:', error);
@@ -123,10 +112,7 @@ export class FirebaseService {
   }
 
   getUserCardDetails(): Observable<CardDetails[]> {
-    return this.firestore
-      .collection('cardDetails')
-      .valueChanges()
-      .pipe(
+    return this.firestore.collection('cardDetails').valueChanges().pipe(
         map((cardDetails: CardDetails[]) => cardDetails),
         catchError((error) => {
           console.error('Error fetching card details: ', error);
@@ -137,11 +123,10 @@ export class FirebaseService {
 
   addUser(user: UserDocument): Observable<UserDocument> {
     return new Observable((observer) => {
-      this.firestore
-        .collection('users')
+      this.firestore.collection('users')
         .add({
           ...user,
-          userId: this.firestore.createId()
+          userId: this.firestore.createId(),
         })
         .then((docRef) => {
           const addedUser: UserDocument = { ...user, id: docRef.id };
@@ -161,7 +146,6 @@ export class FirebaseService {
 
   hasAccess(userId: string): Observable<boolean> {
     const userRef = this.firestore.collection('users').doc(userId);
-
     return userRef.get().pipe(
       map((doc) => {
         if (doc.exists) {
@@ -183,12 +167,9 @@ export class FirebaseService {
   }
 
   getAddressById(userId: string): Observable<Address[]> {
-    return this.firestore
-      .collection<Address>('address', (ref) =>
+    return this.firestore.collection<Address>('address', (ref) =>
         ref.where('userId', '==', userId)
-      )
-      .valueChanges()
-      .pipe(
+      ).valueChanges().pipe(
         catchError((error) => {
           console.error('Error fetching addresses:', error);
           throw error;
@@ -205,11 +186,9 @@ export class FirebaseService {
   ): Observable<{ [userId: string]: Address[] }> {
     const addressesByUser: { [userId: string]: Address[] } = {};
     const observables = userIds.map((userId) =>
-      this.firestore
-        .collection<Address>('address', (ref) =>
+      this.firestore.collection<Address>('address', (ref) =>
           ref.where('userId', '==', userId)
-        )
-        .valueChanges()
+        ).valueChanges()
     );
 
     return combineLatest(observables).pipe(

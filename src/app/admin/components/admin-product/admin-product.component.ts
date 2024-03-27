@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -28,7 +28,7 @@ export class AdminProductComponent {
   constructor(
     private dialog: MatDialog,
     private store: AngularFirestore,
-    private router: Router,
+    private router: Router
   ) {}
   product = getObservable(this.store.collection('product')) as Observable<
     Product[]
@@ -40,12 +40,12 @@ export class AdminProductComponent {
   searchControl = new FormControl();
   searchInput: string = '';
   filteredProducts: Observable<Product[]>;
-  
+
   ngOnInit() {
     this.product.subscribe((data) => {
       this.dataSource.data = data;
       this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;      
+      this.dataSource.sort = this.sort;
     });
   }
 
@@ -104,13 +104,12 @@ export class AdminProductComponent {
         task: {},
       },
     });
-  
+
     dialogRef.afterClosed().subscribe((result: HomeDialogResult) => {
       if (!result) {
         return;
       }
       const addedProductRef = this.store.collection('product').add(result.task);
-  
       addedProductRef.then((docRef) => {
         const addedProductId = docRef.id;
         docRef.update({

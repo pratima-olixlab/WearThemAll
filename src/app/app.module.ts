@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -9,8 +8,6 @@ import { MaterialComponentsModule } from './material-component.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
 import { HomeStartComponent } from './home-start/home-start.component';
-// import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-// import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { ProductComponent } from './product/product.component';
 import { ProductDetailsComponent } from './product/product-details/product-details.component';
 import { ProductHomeComponent } from './product-home/product-home.component';
@@ -23,7 +20,6 @@ import { UserAddComponent } from './admin/components/users/user-add/user-add.com
 import { ProductOrdersComponent } from './admin/components/product-orders/product-orders.component';
 import { OrdersDeclineComponent } from './admin/components/product-orders/orders-decline/orders-decline.component';
 import { OrdersAcceptedComponent } from './admin/components/product-orders/orders-accepted/orders-accepted.component';
-import { HeadersComponent } from './admin/components/header/headers.component';
 import { AdminSubCategoryComponent } from './admin/components/admin-subcategory/admin-subcategory.component';
 import { SubcategoryDetailsComponent } from './admin/components/admin-subcategory/subcategory-details/subcategory-details.component';
 import { AdminProductComponent } from './admin/components/admin-product/admin-product.component';
@@ -39,7 +35,21 @@ import { AddressComponent } from './auth/address/address.component';
 import { AddressHomeComponent } from './auth/address-home/address-home.component';
 import { AddressAddsComponent } from './auth/address-adds/address-adds.component';
 import { AdminRoutingModule } from './admin/admin-routing.module';
-
+import { CartService } from './services/cart.service';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+import { NotificationComponent } from './notification/notification.component';
+import { CartComponent } from './cart/cart.component';
+import { ProfileComponent } from './profile/profile.component';
+import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
+import { UserOrdersComponent } from './user-orders/user-orders.component';
+import { WishlistComponent } from './user-orders/wishlist/wishlist.component';
+import { AuthService } from './services/authenticate.service';
+import { NgxImageZoomModule } from 'ngx-image-zoom';
+import { MensClothingComponent } from './mens-clothing/mens-clothing.component';
+import { WomenClothingComponent } from './women-clothing/women-clothing.component';
+import { KidsClothingComponent } from './kids-clothing/kids-clothing.component';
+import { PaymentComponent } from './payment/payment.component';
+import { NgxStripeModule } from 'ngx-stripe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,7 +65,6 @@ import { AdminRoutingModule } from './admin/admin-routing.module';
     ProductOrdersComponent,
     OrdersDeclineComponent,
     OrdersAcceptedComponent,
-    HeadersComponent,
     AdminSubCategoryComponent,
     SubcategoryDetailsComponent,
     AdminProductComponent,
@@ -70,7 +79,17 @@ import { AdminRoutingModule } from './admin/admin-routing.module';
     ForgotPasswordComponent,
     AddressComponent,
     AddressHomeComponent,
-    AddressAddsComponent
+    AddressAddsComponent,
+    NotificationComponent,
+    CartComponent,
+    ProfileComponent,
+    EditProfileComponent,
+    UserOrdersComponent,
+    WishlistComponent,
+    MensClothingComponent,
+    WomenClothingComponent,
+    KidsClothingComponent,
+    PaymentComponent,
   ],
   imports: [
     BrowserModule,
@@ -80,19 +99,13 @@ import { AdminRoutingModule } from './admin/admin-routing.module';
     AngularFirestoreModule,
     AdminRoutingModule,
     MaterialComponentsModule,
-    // provideFirebaseApp(() =>
-    //   initializeApp({
-    //     projectId: 'dresswell-2ad8f',
-    //     appId: '1:404538998509:web:ec5ef11bc04214b2bf96e4',
-    //     storageBucket: 'dresswell-2ad8f.appspot.com',
-    //     authDomain: 'dresswell-2ad8f.firebaseapp.com',
-    //     messagingSenderId: '404538998509',
-    //     measurementId: 'G-112KGBMR2F',
-    //   })
-    // ),
-    // provideFirestore(() => getFirestore()),
+    NgxImageZoomModule,
+    SimpleNotificationsModule.forRoot(),
+    NgxStripeModule.forRoot(
+      'pk_test_51OQMS8SBmrKIRoJWhVgg6myQKYC6OSEFOCcVQLT3TMBs7LWV30GvB9MZkKYAKBOzdnLQQTta3ZlQYTIcrJmfqNbs00NlzjPYwh'
+    ),
   ],
-  providers: [provideAnimationsAsync()],
+  providers: [provideAnimationsAsync(), CartService, AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

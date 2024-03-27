@@ -1,4 +1,10 @@
-mat-form-field{
+mat-form-field {
     padding: 20px;
-    width: 300px;
+    width: 400px;
+}
+
+.product-form {
+    width: 500px;
+    height: 700px;
+    max-height: auto;
 }

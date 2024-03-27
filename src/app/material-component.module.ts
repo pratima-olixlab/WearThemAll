@@ -17,11 +17,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatStepperModule } from '@angular/material/stepper';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [],
@@ -52,8 +53,8 @@ import { MatAutocompleteModule } from "@angular/material/autocomplete";
     MatCheckboxModule,
     MatRadioModule,
     MatSidenavModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatSliderModule,
   ],
-
 })
 export class MaterialComponentsModule {}

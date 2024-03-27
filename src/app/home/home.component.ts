@@ -10,6 +10,6 @@ export class HomeComponent {
   constructor(private router: Router) {}
 
   getStarted() {
-    this.router.navigate(['/auth']);
+    this.router.navigate(['/home']);
   }
 }

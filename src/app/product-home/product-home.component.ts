@@ -3,7 +3,10 @@ import { Product } from '../product';
 import { CartService } from '../services/cart.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+} from '@angular/fire/compat/firestore';
 const getObservable = (collection: AngularFirestoreCollection<Product>) => {
   const subject = new BehaviorSubject<Product[]>([]);
   collection.valueChanges({ idField: 'id' }).subscribe((val: Product[]) => {
@@ -14,33 +17,34 @@ const getObservable = (collection: AngularFirestoreCollection<Product>) => {
 @Component({
   selector: 'app-product-home',
   templateUrl: './product-home.component.html',
-  styleUrl: './product-home.component.css'
+  styleUrl: './product-home.component.css',
 })
 export class ProductHomeComponent {
   @Input() task: Product | null = null;
   @Output() edit = new EventEmitter<Product>();
   productMessage: string;
-  constructor(private cartService: CartService, 
-              private store: AngularFirestore,
-              private router: Router){}
-  product = getObservable(this.store.collection('product')) as Observable<Product[]>;
-  
+  constructor(
+    private cartService: CartService,
+    private store: AngularFirestore,
+    private router: Router
+  ) {}
+  product = getObservable(this.store.collection('product')) as Observable<
+    Product[]
+  >;
+
   addToCart() {
-    
     this.cartService.addToCart(this.task);
     this.productAddedtoCart();
-    this.router.navigate(['/product']);
+    // this.router.navigate(['/product']);
   }
-  ngOnInit(){
+  ngOnInit() {}
 
-  }
-
-  productAddedtoCart(){
-    this.productMessage = 'Product Added to Cart Successfully!' ;
-    setTimeout(() => (this.productMessage = undefined), 3000); 
+  productAddedtoCart() {
+    this.productMessage = 'Product Added to Cart Successfully!';
+    setTimeout(() => (this.productMessage = undefined), 3000);
   }
 
-  buyProduct(){
+  buyProduct() {
     this.router.navigate(['/buy']);
   }
 

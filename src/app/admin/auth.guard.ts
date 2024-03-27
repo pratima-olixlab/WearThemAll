@@ -7,11 +7,14 @@ import { FirebaseService } from '../services/firebase.service';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private firebaseService: FirebaseService, private router: Router) {}
+  constructor(
+    private firebaseService: FirebaseService,
+    private router: Router
+  ) {}
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     const user = JSON.parse(localStorage.getItem('user'));
-  
+
     if (this.firebaseService.isAuthenticated() && user) {
       return this.firebaseService.hasAccess(user.uid).pipe(
         map((hasAccess) => {

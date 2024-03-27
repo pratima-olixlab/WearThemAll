@@ -9,8 +9,6 @@ import { BuyProductComponent } from './buy-product/buy-product.component';
 import { CategoryDetailsComponent } from './admin/components/admin-category/category-details/category-details.component';
 import { OrdersComponent } from './buy-product/orders/orders.component';
 import { MiniOrdersComponent } from './buy-product/orders/mini-orders/mini-orders.component';
-import { OrdersDeclineComponent } from './admin/components/product-orders/orders-decline/orders-decline.component';
-import { OrdersAcceptedComponent } from './admin/components/product-orders/orders-accepted/orders-accepted.component';
 import { AdminComponent } from './admin/admin.component';
 import { AuthGuard } from './admin/auth.guard';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
@@ -18,7 +16,16 @@ import { AddressComponent } from './auth/address/address.component';
 import { AddressAddsComponent } from './auth/address-adds/address-adds.component';
 import { AddressHomeComponent } from './auth/address-home/address-home.component';
 import { AuthComponent } from './auth/auth.component';
-
+import { NotificationComponent } from './notification/notification.component';
+import { CartComponent } from './cart/cart.component';
+import { ProfileComponent } from './profile/profile.component';
+import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
+import { WishlistComponent } from './user-orders/wishlist/wishlist.component';
+import { UserOrdersComponent } from './user-orders/user-orders.component';
+import { MensClothingComponent } from './mens-clothing/mens-clothing.component';
+import { WomenClothingComponent } from './women-clothing/women-clothing.component';
+import { KidsClothingComponent } from './kids-clothing/kids-clothing.component';
+import { ProductOrdersComponent } from './admin/components/product-orders/product-orders.component';
 
 const routes: Routes = [
   {
@@ -33,9 +40,10 @@ const routes: Routes = [
     path: 'home',
     component: HomeStartComponent,
   },
-  { 
-    path: 'product-details/:id', 
-    component: ProductDetailsComponent },
+  {
+    path: 'product-details/:id',
+    component: ProductDetailsComponent,
+  },
   {
     path: 'product',
     component: ProductComponent,
@@ -44,10 +52,10 @@ const routes: Routes = [
     path: 'header',
     component: HeaderComponent,
   },
-  // {
-  //   path: 'cart',
-  //   component: CartComponent,
-  // },
+  {
+    path: 'cart',
+    component: CartComponent,
+  },
   {
     path: 'buy',
     component: BuyProductComponent,
@@ -64,10 +72,18 @@ const routes: Routes = [
     path: 'address-home',
     component: AddressHomeComponent,
   },
-  // {
-  //   path: 'card-details',
-  //   component: CardDetailsComponent,
-  // },
+  {
+    path: 'mens',
+    component: MensClothingComponent,
+  },
+  {
+    path: 'womens',
+    component: WomenClothingComponent,
+  },
+  {
+    path: 'kids',
+    component: KidsClothingComponent,
+  },
   {
     path: 'category-details',
     component: CategoryDetailsComponent,
@@ -76,46 +92,38 @@ const routes: Routes = [
     path: 'orders',
     component: OrdersComponent,
   },
-  // {
-  //   path: 'profile',
-  //   component: ProfileComponent,
-  // },
-  // {
-  //   path: 'edit-profile',
-  //   component: EditProfileComponent,
-  // },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+  },
+  {
+    path: 'edit-profile',
+    component: EditProfileComponent,
+  },
   {
     path: 'auth/forgot-password',
     component: ForgotPasswordComponent,
   },
-  // {
-  //   path: 'user-orders',
-  //   component: UserOrdersComponent,
-  // },
+  {
+    path: 'user-orders',
+    component: UserOrdersComponent,
+  },
   {
     path: 'mini-orders',
     component: MiniOrdersComponent,
   },
   {
-    path: 'app-orders-decline',
-    component: OrdersDeclineComponent,
+    path: 'wishlist',
+    component: WishlistComponent,
   },
   {
-    path: 'app-orders-accepted',
-    component: OrdersAcceptedComponent,
+    path: 'notification',
+    component: NotificationComponent,
   },
-  // {
-  //   path: 'payment',
-  //   component: PaymentComponent,
-  // },
-  // {
-  //   path: 'wishlist',
-  //   component: WishlistComponent,
-  // },
-  // {
-  //   path: 'notification',
-  //   component: NotificationComponent,
-  // },
+  {
+    path: 'product-orders',
+    component: ProductOrdersComponent,
+  },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
 ];
 @NgModule({

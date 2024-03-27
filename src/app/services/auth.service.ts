@@ -6,9 +6,9 @@ import { Address } from '../product';
   providedIn: 'root',
 })
 export class LocalStorageService {
-  sortCriterion:any;
+  sortCriterion: any;
   sortSubject = new Subject();
-  filteredBooks:any;
+  filteredBooks: any;
   getItem(key: string): any {
     return localStorage.getItem(key);
   }
@@ -21,13 +21,14 @@ export class LocalStorageService {
     localStorage.removeItem(key);
   }
 
-  getSortCriterion(criterion:any){
+  getSortCriterion(criterion: any) {
     this.sortCriterion = criterion;
     this.sortSubject.next(this.sortCriterion);
   }
 
   private selectedAddressSubject = new BehaviorSubject<Address | null>(null);
-  selectedAddress$: Observable<Address | null> = this.selectedAddressSubject.asObservable();
+  selectedAddress$: Observable<Address | null> =
+    this.selectedAddressSubject.asObservable();
 
   private selectedRadioButtonKey = 'selectedRadioButton';
 

@@ -5,13 +5,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CategoryDetails, Product } from '../product';
 
-const getObservable = (
-  collection: AngularFirestoreCollection<CategoryDetails>
-) => {
+const getObservable = (collection: AngularFirestoreCollection<CategoryDetails>) => {
   const subject = new BehaviorSubject<CategoryDetails[]>([]);
-  collection
-    .valueChanges({ idField: 'id' })
-    .subscribe((val: CategoryDetails[]) => {
+  collection.valueChanges({ idField: 'id' }).subscribe((val: CategoryDetails[]) => {
       subject.next(val);
     });
   return subject;
@@ -30,16 +26,21 @@ export class HomeDialogComponent {
   category = getObservable(this.store.collection('category')) as Observable<CategoryDetails[]>;
   searchInput: string = '';
   searchControl = new FormControl();
-  constructor( private store: AngularFirestore,
-               public dialogRef: MatDialogRef<HomeDialogComponent>,
-               @Inject(MAT_DIALOG_DATA) public data: HomeDialogData) {
-                this.selectedCategory = this.data.task.category || '';
-               }
+  constructor(
+    private store: AngularFirestore,
+    public dialogRef: MatDialogRef<HomeDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: HomeDialogData
+  ) {
+    this.selectedCategory = this.data.task.category || '';
+  }
+
   ngOnInit() {
     this.generateCategories();
-  
+
     if (this.data.task.category) {
-      const selectedCategory = this.categories.find(category => category.id === this.data.task.category);
+      const selectedCategory = this.categories.find(
+        (category) => category.id === this.data.task.category
+      );
       if (selectedCategory) {
         this.selectedCategory = selectedCategory.name;
       }
@@ -47,7 +48,7 @@ export class HomeDialogComponent {
       this.selectedCategory = this.categories[0].name;
     }
   }
-  
+
   generateCategories() {
     this.category.subscribe((response) => {
       this.categories = response;

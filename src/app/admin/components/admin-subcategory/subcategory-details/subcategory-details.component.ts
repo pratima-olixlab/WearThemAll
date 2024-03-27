@@ -6,7 +6,7 @@ import { CategoryDetails } from '../../../../product';
 @Component({
   selector: 'app-subcategory-details',
   templateUrl: './subcategory-details.component.html',
-  styleUrls: ['./subcategory-details.component.css']
+  styleUrls: ['./subcategory-details.component.css'],
 })
 export class SubcategoryDetailsComponent implements OnInit {
   @Input() category: CategoryDetails;

@@ -5,7 +5,7 @@ import { CartService } from '../../../services/cart.service';
 @Component({
   selector: 'app-mini-orders',
   templateUrl: './mini-orders.component.html',
-  styleUrls: ['./mini-orders.component.css']
+  styleUrls: ['./mini-orders.component.css'],
 })
 export class MiniOrdersComponent {
   @Input() task: Orders | null = null;
@@ -15,11 +15,11 @@ export class MiniOrdersComponent {
   productMessage: string;
 
   constructor(private cartService: CartService) {}
-  onAccept() {    
+  onAccept() {
     this.accept.emit(this.task);
   }
 
-  onDecline() {    
+  onDecline() {
     this.decline.emit(this.task);
   }
 }

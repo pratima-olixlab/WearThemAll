@@ -19,8 +19,8 @@ export interface UserDocument {
   userId: string;
   email: string;
   password?: string;
-  id?:string;
-  addressId?:string;
+  id?: string;
+  addressId?: string;
   addresses?: Address[];
 }
 
@@ -61,4 +61,11 @@ export interface OrderItem {
   price: number;
   count: number;
 }
-
+export interface Notification {
+  id?: string;
+  type: 'order_accepted' | 'order_declined' | 'other_notification_type';
+  message: string;
+  details: any;
+  read: boolean;
+  count?: number;
+}

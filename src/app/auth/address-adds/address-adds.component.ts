@@ -18,18 +18,21 @@ const getObservable = (collection: AngularFirestoreCollection<Address>) => {
 @Component({
   selector: 'app-address-adds',
   templateUrl: './address-adds.component.html',
-  styleUrls: ['./address-adds.component.css']
+  styleUrls: ['./address-adds.component.css'],
 })
 export class AddressAddsComponent {
-  constructor(private dialog: MatDialog,
-              private store: AngularFirestore,
-              private firebaseService: FirebaseService){}
-  address= getObservable(this.store.collection('address')) as Observable<Address[]>;
- 
-  ngOnInit(){
-  }
+  constructor(
+    private dialog: MatDialog,
+    private store: AngularFirestore,
+    private firebaseService: FirebaseService
+  ) {}
+  address = getObservable(this.store.collection('address')) as Observable<
+    Address[]
+  >;
 
-  editAddress(list: 'address', task: Address){
+  ngOnInit() {}
+
+  editAddress(list: 'address', task: Address) {
     const dialogRef = this.dialog.open(AddressComponent, {
       width: 'auto',
       maxHeight: '90vh',
@@ -38,27 +41,25 @@ export class AddressAddsComponent {
         enableDelete: true,
       },
     });
-    dialogRef.afterClosed().subscribe((result : AddressResult) => {
+    dialogRef.afterClosed().subscribe((result: AddressResult) => {
       if (!result) {
         return;
       }
-      if(result.delete){
+      if (result.delete) {
         this.store.collection(list).doc(task.id).delete();
-      }
-      else {
+      } else {
         this.store.collection(list).doc(task.id).update(task);
       }
-    })
+    });
   }
 
-  drop(event: any) : void{
+  drop(event: any): void {
     if (event.previousContainer === event.container) {
       return;
     }
-
     const item = event.previousContainer.data[event.previousIndex];
     this.store.firestore.runTransaction(() => {
-      const promise = Promise.all ([
+      const promise = Promise.all([
         this.store.collection(event.previousContainer.id).doc(item.id).delete(),
         this.store.collection(event.container.id).add(item),
       ]);
@@ -79,30 +80,29 @@ export class AddressAddsComponent {
         task: {},
       },
     });
-  
     dialogRef.afterClosed().subscribe((result: AddressResult) => {
       if (!result) {
         return;
       }
-  
       this.firebaseService.getCurrentUser().subscribe((user) => {
         if (user) {
           const newAddressId = this.store.createId();
-  
-          this.store.collection('address').doc(newAddressId).set({
-            ...result.task,
-            userId: user.userId,
-            id: newAddressId,
-          })
-          .then(() => {
-            console.log('Document successfully added!');
-          })
-          .catch((error) => {
-            console.error('Error adding document:', error);
-          });
+          this.store
+            .collection('address')
+            .doc(newAddressId)
+            .set({
+              ...result.task,
+              userId: user.userId,
+              id: newAddressId,
+            })
+            .then(() => {
+              console.log('Document successfully added!');
+            })
+            .catch((error) => {
+              console.error('Error adding document:', error);
+            });
         }
       });
     });
-  }  
-  
+  }
 }

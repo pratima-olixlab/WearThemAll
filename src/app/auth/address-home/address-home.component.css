@@ -1,12 +1,5 @@
-  .item{
-    border: 5px solid rgb(145, 143, 143);
+  .item {
     max-width: 800px;
     padding: 10px;
-    background:none;
-  }
-
-.buttons-container {
-    display: flex;
-    justify-content:space-evenly ;
-    margin-top: 10px;
+    background: none;
   }

@@ -4,17 +4,16 @@ import { FirebaseService } from '../../services/firebase.service';
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.css']
+  styleUrls: ['./forgot-password.component.css'],
 })
 export class ForgotPasswordComponent implements OnInit {
-   email: string = '';
-   constructor(private firebaseService: FirebaseService){}
+  email: string = '';
+  constructor(private firebaseService: FirebaseService) {}
 
-   ngOnInit(){}
+  ngOnInit() {}
 
-   forgotPassword(){
-    this.firebaseService.forgotPassword(this.email)
-    this.email = '';    
-   }
-   
+  forgotPassword() {
+    this.firebaseService.forgotPassword(this.email);
+    this.email = '';
+  }
 }

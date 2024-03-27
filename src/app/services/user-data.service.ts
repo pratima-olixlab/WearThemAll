@@ -8,14 +8,11 @@ import { Address, UserDocument } from '../product';
   providedIn: 'root',
 })
 export class UserDataService {
-  constructor(public firestore: AngularFirestore ,  private fb: FormBuilder) {}
-
+  constructor(public firestore: AngularFirestore, private fb: FormBuilder) {}
   private currentUserSubject: BehaviorSubject<UserDocument | null> = new BehaviorSubject<UserDocument | null>(null);
   currentUser$: Observable<UserDocument | null> = this.currentUserSubject.asObservable();
-
   private addressesSubject: BehaviorSubject<Address[]> = new BehaviorSubject<Address[]>([]);
   addresses$: Observable<Address[]> = this.addressesSubject.asObservable();
-
   private userFormSubject: BehaviorSubject<FormGroup | null> = new BehaviorSubject<FormGroup | null>(null);
   userForm$: Observable<FormGroup | null> = this.userFormSubject.asObservable();
 
@@ -44,7 +41,7 @@ export class UserDataService {
   getUserForm(): FormGroup | null {
     return this.userFormSubject.value;
   }
-  
+
   getAddresses(): Address[] {
     return this.addressesSubject.value;
   }

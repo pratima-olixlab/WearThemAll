@@ -38,9 +38,7 @@ export class UsersComponent {
         this.dataSource.data = users;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-
         const userIds = users.map((user) => user.userId);
-
         this.firebaseService.getAddressByIds(userIds).subscribe(
           (addressesByUser) => {
             this.users = users.map((user, index) => {
@@ -110,7 +108,6 @@ export class UsersComponent {
       if (result && result.task) {
         try {
           await this.firebaseService.updateUser(result.task);
-
           const index = this.users.findIndex(
             (u) => u.userId === result.task.userId
           );

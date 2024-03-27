@@ -12,14 +12,20 @@
     </mat-form-field>
 
     <nav mat-tab-nav-bar class="tabs" [tabPanel]="tabPanel">
-        <a mat-tab-link routerLink="/auth" routerLinkActive="active" *ngIf="!isAuthenticated"><b>Authentication</b></a>
-        <a mat-tab-link routerLink="/home" routerLinkActive="active" *ngIf="isAuthenticated"><b>Home</b></a>
-        <a mat-tab-link routerLink="/product" routerLinkActive="active" *ngIf="isAuthenticated"><b>Products</b></a>
+        <!-- <a mat-tab-link routerLink="/auth" routerLinkActive="active" *ngIf="!isAuthenticated"><b>Authentication</b></a> -->
+        <a mat-tab-link routerLink="/home" routerLinkActive="active"><b>Home</b></a>
+        <!-- <a mat-tab-link routerLink="/product" routerLinkActive="active"><b>Products</b></a> -->
         <a mat-tab-link routerLink="/admin" routerLinkActive="active" *ngIf="isAuthenticated"><b>Admin</b></a>
-        <a mat-tab-link routerLink="/cart" routerLinkActive="active" *ngIf="isAuthenticated">
+        <a mat-tab-link routerLink="/cart" routerLinkActive="active">
             <div class="cart">
                 <span class="count">{{totalItems}}</span>
                 <i class="material-icons">shopping_cart</i>
+            </div>
+        </a>
+        <a mat-tab-link routerLink="/notification" routerLinkActive="active" *ngIf="isAuthenticated">
+            <div class="cart">
+                <span class="count">{{totalNotifications}}</span>
+                <i class="material-icons">mail_outline</i>
             </div>
         </a>
         <a [matMenuTriggerFor]="profileMenu" *ngIf="isAuthenticated">
@@ -51,6 +57,7 @@
                 <mat-icon>logout</mat-icon>
                 Log Out</button>
         </mat-menu>
+        <a mat-tab-link routerLink="/auth" routerLinkActive="active" *ngIf="!isAuthenticated"><b>Sign In</b></a>
     </nav>
 </mat-toolbar>
 

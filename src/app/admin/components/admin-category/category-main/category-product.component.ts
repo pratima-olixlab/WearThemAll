@@ -1,21 +1,16 @@
-import { Component, ViewChild} from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection} from '@angular/fire/compat/firestore';
+import { Component, ViewChild } from '@angular/core';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { transferArrayItem } from '@angular/cdk/drag-drop';
-import { CategoryDetailsComponent, CategoryResult} from '../category-details/category-details.component';
+import { CategoryDetailsComponent, CategoryResult } from '../category-details/category-details.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { CategoryDetails } from '../../../../product';
-import { CartService } from '../../../../services/cart.service';
 
-const getObservable = (
-  collection: AngularFirestoreCollection<CategoryDetails>
-) => {
+const getObservable = ( collection: AngularFirestoreCollection<CategoryDetails>) => {
   const subject = new BehaviorSubject<CategoryDetails[]>([]);
-  collection
-    .valueChanges({ idField: 'id' })
-    .subscribe((val: CategoryDetails[]) => {
+  collection.valueChanges({ idField: 'id' }).subscribe((val: CategoryDetails[]) => {
       subject.next(val);
     });
   return subject;
@@ -30,7 +25,6 @@ export class CategoryProductComponent {
   constructor(
     private dialog: MatDialog,
     private store: AngularFirestore,
-    private cartService: CartService
   ) {}
   category = getObservable(this.store.collection('category')) as Observable<
     CategoryDetails[]
@@ -71,7 +65,6 @@ export class CategoryProductComponent {
     if (event.previousContainer === event.container) {
       return;
     }
-
     const item = event.previousContainer.data[event.previousIndex];
     this.store.firestore.runTransaction(() => {
       const promise = Promise.all([
@@ -105,7 +98,6 @@ export class CategoryProductComponent {
 
       addedCategoryRef.then((docRef) => {
         const addedCategoryId = docRef.id;
-
         docRef.update({
           id: addedCategoryId,
         });

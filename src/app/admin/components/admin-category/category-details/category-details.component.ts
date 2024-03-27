@@ -1,11 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CategoryDetails } from '../../../../product';
-
 @Component({
   selector: 'app-category-details',
   templateUrl: './category-details.component.html',
-  styleUrls: ['./category-details.component.css']
+  styleUrls: ['./category-details.component.css'],
 })
 export class CategoryDetailsComponent {
   private backupProduct: Partial<CategoryDetails> = { ...this.data.task };
@@ -21,15 +20,12 @@ export class CategoryDetailsComponent {
     this.dialogRef.close(this.data);
   }
 }
-
 export interface CategoryData {
   task: Partial<CategoryDetails>;
   enableDelete: boolean;
   categories?: CategoryDetails[];
 }
-
 export interface CategoryResult {
   task: CategoryDetails;
   delete?: boolean;
 }
-

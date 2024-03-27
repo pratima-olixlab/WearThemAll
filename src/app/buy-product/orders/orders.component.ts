@@ -1,10 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import {
-  AngularFirestore,
-} from '@angular/fire/compat/firestore';
-import { Router } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Subscription } from 'rxjs';
 import { Orders, Product } from '../../product';
 import { CartService } from '../../services/cart.service';
@@ -17,15 +13,14 @@ import { CartService } from '../../services/cart.service';
 export class OrdersComponent {
   authStateSubscription: Subscription | null = null;
   totalAmount: number = 0;
-  orderId: string='';
+  orderId: string = '';
   cartItems: Product[];
   alertShown: boolean = false;
 
   constructor(
     private cartService: CartService,
     private store: AngularFirestore,
-    private afAuth: AngularFireAuth,
-    private router: Router
+    private afAuth: AngularFireAuth
   ) {}
 
   ngOnInit() {
@@ -40,8 +35,7 @@ export class OrdersComponent {
       this.authStateSubscription.unsubscribe();
     }
     this.authStateSubscription = this.afAuth.authState.subscribe((user) => {
-      if (user) {        
-        // let orderId: string | undefined;
+      if (user) {
         const order: Orders = {
           status: 'In Progress',
           userId: user.uid,
@@ -54,16 +48,11 @@ export class OrdersComponent {
           .add(order)
           .then((docRef) => {
             const orderId = docRef.id;
-
-            // Update the orderId field in your component after getting the ID
             this.orderId = orderId;
-
             this.cartService.clearCart();
-
             if (!this.alertShown) {
               alert('Your order is in Progress!');
               this.alertShown = true;
-
               if (this.authStateSubscription) {
                 this.authStateSubscription.unsubscribe();
               }
@@ -76,4 +65,3 @@ export class OrdersComponent {
     });
   }
 }
-

@@ -6,6 +6,7 @@ import { Product, UserDocument } from '../../product';
 import { WishlistService } from '../../services/wishlist.service';
 import { FirebaseService } from '../../services/firebase.service';
 import { CartService } from '../../services/cart.service';
+import { AuthService } from '../../services/authenticate.service';
 
 @Component({
   selector: 'app-product-details',
@@ -13,6 +14,7 @@ import { CartService } from '../../services/cart.service';
   styleUrls: ['./product-details.component.css'],
 })
 export class ProductDetailsComponent {
+  isAuthenticated: boolean;
   productId: string;
   currentUser: UserDocument | null = null;
   product: Product | undefined;
@@ -34,16 +36,18 @@ export class ProductDetailsComponent {
     private wishlistService: WishlistService,
     private afAuth: AngularFireAuth,
     private firebaseService: FirebaseService,
-    private cartService: CartService, 
-    private router: Router
+    private cartService: CartService,
+    private router: Router,
+    private authService: AuthService
   ) {
     const storedWishlistStatus = localStorage.getItem('isAddedToWishlist');
     this.isAddedToWishlist = storedWishlistStatus
       ? JSON.parse(storedWishlistStatus)
       : false;
   }
-
   ngOnInit() {
+    this.isAuthenticated = this.authService.isSignedIn;
+    console.log('this.isAuthenticated', this.isAuthenticated);
     this.route.params.subscribe((params) => {
       this.productId = params['id'];
       this.getProductDetails();
@@ -94,13 +98,11 @@ export class ProductDetailsComponent {
         }
       });
   }
-  
+
   updateStars(): void {
     this.stars.forEach((star) => {
       star.class =
-        star.id <= this.averageRating
-          ? 'star-gold star'
-          : 'star-gray star';
+        star.id <= this.averageRating ? 'star-gold star' : 'star-gray star';
     });
   }
 
@@ -155,18 +157,22 @@ export class ProductDetailsComponent {
     localStorage.setItem(wishlistStateKey, JSON.stringify(wishlistState));
   }
 
-  buyProduct(){
-    this.cartService.addToCart(this.product);
-    this.router.navigate(['/buy']);
+  buyProduct() {
+    if (this.authService.isSignedIn == true) {
+      this.cartService.addToCart(this.product);
+      this.router.navigate(['/buy']);
+    } else {
+      this.router.navigate(['/auth']);
+    }
   }
-    
-  addToCart() { 
+
+  addToCart() {
     this.cartService.addToCart(this.product);
     this.productAddedtoCart();
   }
 
-  productAddedtoCart(){
-    this.productMessage = 'Product Added to Cart Successfully!' ;
-    setTimeout(() => (this.productMessage = undefined), 3000); 
+  productAddedtoCart() {
+    this.productMessage = 'Product Added to Cart Successfully!';
+    setTimeout(() => (this.productMessage = undefined), 3000);
   }
 }

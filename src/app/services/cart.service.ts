@@ -23,10 +23,7 @@ export class CartService {
   private loadCartItems(): void {
     this.auth.authState.subscribe((user) => {
       if (user) {
-        this.firestore
-          .collection('users')
-          .doc(user.uid)
-          .valueChanges()
+        this.firestore.collection('users').doc(user.uid).valueChanges()
           .subscribe((userData: any) => {
             const cartItems: Product[] =
               userData && userData.cartItems ? userData.cartItems : [];
@@ -51,10 +48,7 @@ export class CartService {
   private updateFirestore(cartItems: Product[]): void {
     this.auth.authState.subscribe((user) => {
       if (user) {
-        this.firestore
-          .collection('users')
-          .doc(user.uid)
-          .update({ cartItems: cartItems });
+        this.firestore.collection('users').doc(user.uid).update({ cartItems: cartItems });
       }
     });
   }
@@ -108,17 +102,6 @@ export class CartService {
     return cartItems.reduce((total, item) => total + item.count, 0);
   }
 
-  private updateOrders(order: any): void {
-    this.auth.authState.subscribe((user) => {
-      if (user) {
-        this.firestore
-          .collection('orders')
-          .doc(user.uid)
-          .update({ orders: order });
-      }
-    });
-  }
-
   getOrders() {
     return this.auth.authState.pipe(
       switchMap((user) => {
@@ -133,6 +116,6 @@ export class CartService {
 
   clearCart() {
     this.cartItemsSubject.next([]);
-    localStorage.removeItem('cartItems');    
+    localStorage.removeItem('cartItems');
   }
 }
